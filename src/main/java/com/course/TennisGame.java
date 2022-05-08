@@ -29,7 +29,7 @@ public class TennisGame {
      * 第二位選手
      */
     private final String SECOND_PLAYER = "second player";
-    
+
     /**
      * 兩位選手分數大於等於三分，且平手
      */
@@ -102,19 +102,33 @@ public class TennisGame {
         */
         if (scoreGreaterThanThree(firstPlayerTotalScore) && scoreGreaterThanThree(secondPlayerTotalScore)) {
 
-            //TODO Step1. 判斷分差 0分 → Deuce
+            /*Step1. 判斷分差 0分 → Deuce*/
             if (isDeuce(firstPlayerTotalScore, secondPlayerTotalScore)) {
                 return DEUCE;
             }
 
-            //TODO Step2. 先判斷哪位選手領先
+            /*Step2. 先判斷哪位選手領先*/
             String ahead = whoIsAhead(firstPlayerTotalScore, secondPlayerTotalScore);
 
-            //TODO Step3. 1分 → Advantage ; 2分 → 勝利
+            /*Step3. 1分 → Advantage ; 2分 → 勝利*/
             String advantageOrWin = isAdvantageOrWin(firstPlayerTotalScore, secondPlayerTotalScore);
 
-            //TODO Step4. 打印出結果
+            /*Step4. 打印出結果*/
             return ahead + BLANK + advantageOrWin;
+
+        }
+
+        /*一般比賽情況，先得4分就是獲勝*/
+        if (firstPlayerTotalScore == 4) {
+            return FIRST_PLAYER + BLANK + WIN;
+        } else if (secondPlayerTotalScore == 4) {
+            return SECOND_PLAYER + BLANK + WIN;
+        }
+        
+        /*秀出當前的分數*/
+        String score1 = scoreMapping.get(firstPlayerTotalScore);
+        String score2 = scoreMapping.get(secondPlayerTotalScore);
+        return score1 + BLANK + score2;
 
 //            /*FirstPlayer領先1分*/
 //            if (firstPlayerTotalScore > secondPlayerTotalScore
@@ -136,18 +150,6 @@ public class TennisGame {
 //                    && secondPlayerTotalScore - firstPlayerTotalScore == 2) {
 //                return "second player win";
 //            }
-        }
-
-        if (firstPlayerTotalScore == 4) {
-            return FIRST_PLAYER + BLANK + WIN;
-        } else if (secondPlayerTotalScore == 4) {
-            return SECOND_PLAYER + BLANK + WIN;
-        }
-
-        String score1 = scoreMapping.get(firstPlayerTotalScore);
-        String score2 = scoreMapping.get(secondPlayerTotalScore);
-        return score1 + BLANK + score2;
-
 //        if (firstPlayerTotalScore == 3 && secondPlayerTotalScore == 2) {
 //            return FORTY + BLANK + THIRTY;
 //        } else if (firstPlayerTotalScore == 0 && secondPlayerTotalScore == 1) {
@@ -155,6 +157,8 @@ public class TennisGame {
 //        }
 //        return LOVE + BLANK + LOVE;
     }
+
+
 
     /**
      * 第一位選手得分
